@@ -248,29 +248,39 @@ main{
     position:fixed;
     top:0;
     
-    width:calc(100% - 20px);
+    width:75%;
     z-index:var(--z-index-high);
-   margin:10px;
+   margin:10px 10px 10px 20%;
    background:var(--bg);
     display:flex;
-    border-radius:5px;
+    border-radius:10px;
     flex-direction:column;
     align-items:center;
     gap:5px;
     color:white;
-    clip-path:inset(0 round 0);
-    animation:opaq-in 0.5s ease forwards;
+    clip-path:inset(0 round 10px);
+    animation:come-in 0.5s ease forwards;
     user-select: none;
     max-width:500px;
+    border:1px solid;
+    backdrop-filter: blur(50px);
+    --webkit-backdrop-filter: blur(50px);
+    padding:10px;
     
     
 }
-@keyframes opaq-in{
+@keyframes come-in{
     0%{
-        opacity:0;
+        transform:translateX(100%)
+    }
+    25%{
+        transform:translateX(0%)
+    }
+    50%{
+        transform:translateX(2%)
     }
     100%{
-        opacity:1;
+        transform:translateX(0%);
     }
 }
 @keyframes absolute-in-from-right{
@@ -299,7 +309,8 @@ main{
 }
 
 .notify.success{
-     border-left:3px solid #4caf50;
+    border-color:#4caf50;
+    background:rgba(76, 175, 80,0.1);
 }
 .notify.success .body .icon{
    min-height:32px;
@@ -310,7 +321,8 @@ main{
 
 }
 .notify.error{
-    border-left:3px solid red;
+     border-color:red;
+    background:rgba(255, 0, 0,0.1);
 }
 .notify.error .body .icon{
    min-height:32px;

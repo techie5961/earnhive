@@ -219,7 +219,7 @@ footer .child .f-links.active{
               
              
                  {{-- NEW NAV LINK --}}
-                <div class="nav-group searchable nav-link c-white w-full column">
+                {{-- <div class="nav-group searchable nav-link c-white w-full column">
                      <a onclick="
                      let child=this.closest('.nav-group').querySelector('.nav-child');
                      if(child.classList.contains('display-none')){
@@ -254,7 +254,7 @@ footer .child .f-links.active{
                   this.closest('nav').classList.add('mobile-display-none');   document.body.classList.remove('overflow-hidden');
                   ">Buy Data Bundle</a>
                              </div>
-                </div>
+                </div> --}}
                 {{-- NEW NAV LINK --}}
                  <a class="p-10 searchable nav-link pointer align-center clip-10 w-full row g-5 no-u c-white" onclick="
                   spa(event,'{{ url('users/bank/add') }}');

@@ -348,20 +348,22 @@
        <strong class="desc p-left-20">Quick Actions</strong>
        <section style="padding-top:5px;" class="grid quick-links p-20 grid-4 w-full place-center g-10">
         {{-- NEW LINK --}}
-        <div class="column align-center g-10">
+        <div onclick="
+        MyFunc.CheckIn(this)
+        " class="column align-center g-10">
             <div style="background:rgba(0,0,0,0.5);color:var(--primary-light);box-shadow:0 0 15px var(--primary-light)" class="h-50 column perfect-square circle align-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="25" width="25"><path d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52a12,12,0,0,0,24,0h72a12,12,0,0,0,24,0h16V76H52V52ZM52,204V100H204V204Zm120.49-84.49a12,12,0,0,1,0,17l-48,48a12,12,0,0,1-17,0l-24-24a12,12,0,0,1,17-17L116,159l39.51-39.52A12,12,0,0,1,172.49,119.51Z"></path></svg>
-
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                
             </div>
-            <strong class="font-1">Tasks</strong>
+            <span class="title">Daily Claim</span>
         </div>
         {{-- NEW LINK --}}
-         <div class="column align-center g-10">
+         <div onclick="CreateNotify('error','This feature is coming soon')" class="column align-center g-10">
             <div style="background:rgba(0,0,0,0.5);color:var(--primary-light);box-shadow:0 0 15px var(--primary-light)" class="h-50 column perfect-square circle align-center justify-center">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="25" width="25"><path d="M196,136a16,16,0,1,1-16-16A16,16,0,0,1,196,136Zm40-36v80a32,32,0,0,1-32,32H60a32,32,0,0,1-32-32V60.92A32,32,0,0,1,60,28H192a12,12,0,0,1,0,24H60a8,8,0,0,0-8,8.26v.08A8.32,8.32,0,0,0,60.48,68H204A32,32,0,0,1,236,100Zm-24,0a8,8,0,0,0-8-8H60.48A33.72,33.72,0,0,1,52,90.92V180a8,8,0,0,0,8,8H204a8,8,0,0,0,8-8Z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M212.92,17.71a7.89,7.89,0,0,0-6.86-1.46l-128,32A8,8,0,0,0,72,56V166.1A36,36,0,1,0,88,196V102.25l112-28V134.1A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.71Z"></path></svg>
 
             </div>
-            <strong class="font-1">Withdraw</strong>
+            <span>Stream & Earn</span>
         </div>
         {{-- NEW LINK --}}
          <div class="column align-center g-10">
@@ -369,7 +371,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="25" width="25"><path d="M76,64A12,12,0,0,1,88,52H216a12,12,0,0,1,0,24H88A12,12,0,0,1,76,64Zm140,52H88a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Zm0,64H88a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24ZM44,112a16,16,0,1,0,16,16A16,16,0,0,0,44,112Zm0-64A16,16,0,1,0,60,64,16,16,0,0,0,44,48Zm0,128a16,16,0,1,0,16,16A16,16,0,0,0,44,176Z"></path></svg>
 
             </div>
-            <strong class="font-1">Transactions</strong>
+            <span>Transactions</span>
         </div>
          {{-- NEW LINK --}}
          <div class="column align-center g-10">
@@ -377,7 +379,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="25" width="25"><path d="M164.38,181.1a52,52,0,1,0-72.76,0,75.89,75.89,0,0,0-30,28.89,12,12,0,0,0,20.78,12,53,53,0,0,1,91.22,0,12,12,0,1,0,20.78-12A75.89,75.89,0,0,0,164.38,181.1ZM100,144a28,28,0,1,1,28,28A28,28,0,0,1,100,144Zm147.21,9.59a12,12,0,0,1-16.81-2.39c-8.33-11.09-19.85-19.59-29.33-21.64a12,12,0,0,1-1.82-22.91,20,20,0,1,0-24.78-28.3,12,12,0,1,1-21-11.6,44,44,0,1,1,73.28,48.35,92.18,92.18,0,0,1,22.85,21.69A12,12,0,0,1,247.21,153.59Zm-192.28-24c-9.48,2.05-21,10.55-29.33,21.65A12,12,0,0,1,6.41,136.79,92.37,92.37,0,0,1,29.26,115.1a44,44,0,1,1,73.28-48.35,12,12,0,1,1-21,11.6,20,20,0,1,0-24.78,28.3,12,12,0,0,1-1.82,22.91Z"></path></svg>
 
             </div>
-            <strong class="font-1">Team</strong>
+            <span>Team</span>
         </div>
         
        </section>
@@ -478,6 +480,23 @@
             
            }
 
+           },
+           CheckIn : async function(element){
+           try{
+            element.querySelector('.title').innerHTML='Claiming..';
+           let response=await fetch('{{ url('users/get/daily/claim') }}');
+           if(response.ok){
+            let data=await response.json();
+            CreateNotify(data.status,data.message);
+            element.querySelector('.title').innerHTML='Daily Claim';
+
+           }else{
+            CreateNotify('error',response.status);
+            element.querySelector('.title').innerHTML='Daily Claim';
+           }
+           }catch(error){
+            CreateNotify('error',error.stack)
+           }
            }
         }
         MyFunc.Style();

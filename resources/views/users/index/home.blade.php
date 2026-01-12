@@ -168,7 +168,7 @@
             border:1px solid var(--bg-lighter);
             background:var(--bg-light);
             border-radius:10px;
-            border-top:8px solid var(--primary-light);
+            /* border-top:8px solid var(--primary-light); */
            
 
         }
@@ -435,7 +435,6 @@
                 </div>
             </div>
         </div>
-         <img src="{{ asset('banners/72a5e007-4da6-46d2-853d-eafccff05b9f.jpeg') }}" alt="" class="w-full m-x-auto br-10 max-w-500">
         
     </section>
 @endsection

@@ -34,12 +34,12 @@
             </div>
             <div class="column g-5 w-full">
                
-                <span>Select a wallet you intend to withdraw from.</span>
+                <span>Withdrawal wallet</span>
             </div>
             <form action="{{ url('users/post/withdraw/process') }}" method="POST" onsubmit="PostRequest(event,this,MyFunc.Completed)" class="w-full column g-10">
               
                 <input type="hidden" class="input" name="_token" value="{{ @csrf_token() }}">
-                <div class="w-full grid grid-2 pc-grid-3 g-10 place-center">
+                {{-- <div class="w-full grid grid-2 pc-grid-3 g-10 place-center">
                     <div onclick="
                      document.querySelectorAll('.wallets').forEach((wallet)=>{
                      wallet.classList.remove('active');
@@ -108,12 +108,23 @@
                         <strong class="font-1">Games Wallet</strong>
                         <strong class="desc">{!! Currency(Auth::guard('users')->user()->id)  !!}{{ number_format(Auth::guard('users')->user()->deposit_balance) }}</strong>
                     </div>
+                </div> --}}
+
+             
+                  <div style="border:1px solid var(--bg-lighter)" class="h-50 br-5 cont w-full border-1 bg-light">
+                    <select name="wallet" class="inp input border-none required w-full h-full bg-transparent">
+                        <option value="" selected disabled>Select Wallet....</option>
+                        <option value="activities_balance">Activities Wallet</option>
+                         <option value="affiliate_balance">Affiliate Wallet</option>
+                    </select>
                 </div>
+              
                 {{-- WALLET SELECTED --}}
-                <input type="hidden" name="wallet" class="input wallet">
+                {{-- <input type="hidden" name="wallet" class="input wallet"> --}}
                 {{-- BANK DETAILS --}}
                   @if ($bank_linked !== 'false')
-            <div style="border:1px solid var(--bg-lighter)" class="w-full no-select m-x-auto max-w-500 p-10 bg-light border-1 g-10">
+                  <label for="">Bank Details</label>
+            <div style="border:1px solid var(--bg-lighter)" class="w-full br-5 no-select m-x-auto max-w-500 p-10 bg-light border-1 g-10">
                 <span class="row m-y-10">Your Account Details</span>
             <div class="row space-between g-10 align-center">
                 <strong class="font-1"  style="color:silver">Account Number :</strong>
@@ -127,17 +138,16 @@
                 <strong class="font-1"  style="color:silver">Account Holder Name :</strong>
                 <span>{{ $bank->account_name }}</span>
             </div>
-           <div onclick="spa(event,'{{ url('users/bank/add') }}')" class="w-full w-fit m-left-auto m-top-10 clip-0 br-0 btn-primary-3d no-select pointer row h-40 p-10 align-center justify-center">
+           <div onclick="spa(event,'{{ url('users/bank/add') }}')" style="background:var(--primary-light)" class="w-full w-fit m-left-auto m-top-10 clip-0 br-0 btn-primary-3d bg-primary-light no-select pointer row h-40 p-10 align-center justify-center">
           <span>  Update Bank </span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="CurrentColor" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M8.51192 4.43057C8.82641 4.161 9.29989 4.19743 9.56946 4.51192L15.5695 11.5119C15.8102 11.7928 15.8102 12.2072 15.5695 12.4881L9.56946 19.4881C9.29989 19.8026 8.82641 19.839 8.51192 19.5695C8.19743 19.2999 8.161 18.8264 8.43057 18.5119L14.0122 12L8.43057 5.48811C8.161 5.17361 8.19743 4.70014 8.51192 4.43057Z" fill="CurrentColor"></path>
-</svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M48,80v96a8,8,0,0,1-16,0V80a8,8,0,0,1,16,0Zm189.66,42.34-96-96A8,8,0,0,0,128,32V72H72a8,8,0,0,0-8,8v96a8,8,0,0,0,8,8h56v40a8,8,0,0,0,13.66,5.66l96-96A8,8,0,0,0,237.66,122.34Z"></path></svg>
+            
 
            </div>
         </div>
        @endif
        {{-- WITHDRAWAL AMOUNT --}}
-                <label for="">Enter Withdrawal Amount</label>
+                <label for="">Withdrawal Amount</label>
                 <div style="border:1px solid var(--bg-lighter)" class="cont row align-center bg-light w-full h-50">
                     <input placeholder="Enter withdrawal amount" name="amount" type="number" class="w-full inp input required account-number h-full no-border br-10 bg-transparent">
                 </div>
@@ -145,14 +155,14 @@
                 
                  
                
-              <div class="w-full column g-2">
+              {{-- <div class="w-full column g-2">
                 <strong>Disclaimer:</strong>
                 <span>Please double-check your withdrawal details before you continue, Please make sure the account detials you have entered are 100% correct and belongs to you. <br>
                 If you provide the wrong details,your money could be sent to the wrong account and we would not be able to recover it for you. <br>
                 {{  config('app.name')}} is not responsible for funds lost due to incorrect information being entered.
                 </span>
-              </div>
-                <button class="post clip-0 bold br-0">Make Withdrawal</button>
+              </div> --}}
+                <button class="post clip-0 bold br-0">Place Withdrawal</button>
             </form>
         </div>
     </section>
