@@ -217,7 +217,7 @@
          .get-started-btn{
             position: relative;
          }
-        .get-started-btn::before{
+        /* .get-started-btn::before{
             content:'';
             position:absolute;
             left:0;
@@ -244,7 +244,7 @@
             100%{
                 left:100%
             }
-        }
+        } */
 
     </style>
 @endsection

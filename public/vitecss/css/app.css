@@ -262,10 +262,10 @@ main{
     animation:come-in 0.5s ease forwards;
     user-select: none;
     max-width:500px;
-    border:1px solid;
+    border:0.5px solid;
     backdrop-filter: blur(50px);
-    --webkit-backdrop-filter: blur(50px);
-    padding:10px;
+    -webkit-backdrop-filter: blur(50px);
+    /* padding:10px; */
     
     
 }
@@ -310,7 +310,7 @@ main{
 
 .notify.success{
     border-color:#4caf50;
-    background:rgba(76, 175, 80,0.1);
+    background:rgba(76, 175, 80,0.05);
 }
 .notify.success .body .icon{
    min-height:32px;
@@ -322,7 +322,7 @@ main{
 }
 .notify.error{
      border-color:red;
-    background:rgba(255, 0, 0,0.1);
+    background:rgba(255, 0, 0,0.05);
 }
 .notify.error .body .icon{
    min-height:32px;
