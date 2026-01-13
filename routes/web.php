@@ -154,6 +154,9 @@ Route::prefix('users')->group(function(){
     Route::get('color/game/play/process',[
         UsersGetRequestController::class,'ColorGame'
     ]);
+    Route::get('daily/claim',[
+        UsersGetRequestController::class,'DailyClaim'
+    ]);
    });
 
     // prefix post

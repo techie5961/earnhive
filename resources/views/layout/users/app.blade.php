@@ -71,16 +71,14 @@ footer .child .f-links{
   width:100%;
   border-radius:1000px;
   transition: all 0.5s ease ;
+  user-select:none;
   
 }
-footer .child .f-links.active{
- background:rgba(255,255,255,0.05)
-  
-}
+
 .menu-icon{
   height:40px;
   width:40px;
-  border-radius:50%; 
+  border-radius:5px !important; 
   background:var(--primary-light) !important;
   color:var(--primary-text) !important;
 
@@ -169,7 +167,7 @@ footer .child .f-links.active{
         <section onclick="event.stopPropagation()" class="nav transition-ease-half overflow-auto column h-full w-semi-full">
             {{-- NAV PROFILE SECTION --}}
           <div class="nav-profile z-index-1000 pos-sticky stick-top w-full column g-10 p-20">
-              <img src="{{ asset('favicon/logo.jpg?v=1.3') }}" alt="" class="w-half">
+              <img src="{{ asset('favicon/logo.jpg?v=1.3') }}" alt="" class="w-semi-full">
               {{-- <div style="border:0.1px solid var(--bg-lighter)" class="cont bg-light w-full h-40 row align-center">
                 <input oninput="
                   let searchable=document.querySelectorAll('.searchable');

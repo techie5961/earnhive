@@ -272,7 +272,7 @@
              
         </div>
         <div class="align-center m-top-20 row g-10">
-           <div style="background:var(--primary-light)" class="h-fit bold w-fit br-5 clip-5 p-10  pointer bg-primary-light">
+           <div onclick="spa(event,'{{ url('users/withdraw') }}')" style="background:var(--primary-light)" class="h-fit bold w-fit br-5 clip-5 p-10  pointer bg-primary-light">
           Withdraw Funds
         </div>
         </div>
@@ -350,7 +350,7 @@
         {{-- NEW LINK --}}
         <div onclick="
         MyFunc.CheckIn(this)
-        " class="column align-center g-10">
+        " class="column align-center text-center g-10">
             <div style="background:rgba(0,0,0,0.5);color:var(--primary-light);box-shadow:0 0 15px var(--primary-light)" class="h-50 column perfect-square circle align-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
                 
@@ -358,7 +358,7 @@
             <span class="title">Daily Claim</span>
         </div>
         {{-- NEW LINK --}}
-         <div onclick="CreateNotify('error','This feature is coming soon')" class="column align-center g-10">
+         <div onclick="CreateNotify('error','This feature is coming soon')" class="column text-center align-center g-10">
             <div style="background:rgba(0,0,0,0.5);color:var(--primary-light);box-shadow:0 0 15px var(--primary-light)" class="h-50 column perfect-square circle align-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M212.92,17.71a7.89,7.89,0,0,0-6.86-1.46l-128,32A8,8,0,0,0,72,56V166.1A36,36,0,1,0,88,196V102.25l112-28V134.1A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.71Z"></path></svg>
 
@@ -366,7 +366,7 @@
             <span>Stream & Earn</span>
         </div>
         {{-- NEW LINK --}}
-         <div class="column align-center g-10">
+         <div onclick="spa(event,'{{ url('users/transactions') }}')" class="column align-center text-center g-10">
             <div style="background:rgba(0,0,0,0.5);color:var(--primary-light);box-shadow:0 0 15px var(--primary-light)" class="h-50 column perfect-square circle align-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="25" width="25"><path d="M76,64A12,12,0,0,1,88,52H216a12,12,0,0,1,0,24H88A12,12,0,0,1,76,64Zm140,52H88a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Zm0,64H88a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24ZM44,112a16,16,0,1,0,16,16A16,16,0,0,0,44,112Zm0-64A16,16,0,1,0,60,64,16,16,0,0,0,44,48Zm0,128a16,16,0,1,0,16,16A16,16,0,0,0,44,176Z"></path></svg>
 
@@ -374,7 +374,7 @@
             <span>Transactions</span>
         </div>
          {{-- NEW LINK --}}
-         <div class="column align-center g-10">
+         <div onclick="spa(event,'{{ url('users/team') }}')" class="column align-center text-center g-10">
             <div style="background:rgba(0,0,0,0.5);color:var(--primary-light);box-shadow:0 0 15px var(--primary-light)" class="h-50 column perfect-square circle align-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="25" width="25"><path d="M164.38,181.1a52,52,0,1,0-72.76,0,75.89,75.89,0,0,0-30,28.89,12,12,0,0,0,20.78,12,53,53,0,0,1,91.22,0,12,12,0,1,0,20.78-12A75.89,75.89,0,0,0,164.38,181.1ZM100,144a28,28,0,1,1,28,28A28,28,0,0,1,100,144Zm147.21,9.59a12,12,0,0,1-16.81-2.39c-8.33-11.09-19.85-19.59-29.33-21.64a12,12,0,0,1-1.82-22.91,20,20,0,1,0-24.78-28.3,12,12,0,1,1-21-11.6,44,44,0,1,1,73.28,48.35,92.18,92.18,0,0,1,22.85,21.69A12,12,0,0,1,247.21,153.59Zm-192.28-24c-9.48,2.05-21,10.55-29.33,21.65A12,12,0,0,1,6.41,136.79,92.37,92.37,0,0,1,29.26,115.1a44,44,0,1,1,73.28-48.35,12,12,0,1,1-21,11.6,20,20,0,1,0-24.78,28.3,12,12,0,0,1-1.82,22.91Z"></path></svg>
 

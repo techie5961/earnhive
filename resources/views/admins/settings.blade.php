@@ -80,6 +80,14 @@
                 <input value="{{ $general->referral->second ?? 0 }}" type="number" placeholder="E.g 3000" name="second_level_ref"  class="inp required input h-full w-full no-border bg-transparent br-10">
             </div>
              </div>
+
+                 {{-- NEW INPUT --}}
+             <div class="column w-full g-5">
+                 <label for="">Daily Claim (&#8358;)</label>
+            <div class="cont w-full h-50 br-5 border-1 border-color-silver bg-dim">
+                <input value="{{ $general->daily_claim ?? 0 }}" type="number" placeholder="E.g 600" name="daily_claim"  class="inp required input h-full w-full no-border bg-transparent br-10">
+            </div>
+             </div>
            
              {{-- SUBMIT BUTTON --}}
             <button class="post bg-secondary secondary-text"><span>Update General Settings</span></button>

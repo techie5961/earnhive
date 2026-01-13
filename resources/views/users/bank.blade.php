@@ -32,7 +32,7 @@
             </div>
             <div class="column g-5 w-full">
              
-                <span>You can add or update your bank details at anytime ,just make sure you are adding the correct bank as all withdrawals are sent inti the bank linked upon withdrawal.</span>
+                <span>You can add or update your bank details at anytime ,just make sure you are adding the correct bank as all withdrawals are sent into the bank linked upon withdrawal.</span>
             </div>
             <form action="{{ url('users/post/add/bank/process') }}" method="POST" onsubmit="PostRequest(event,this,MyFunc.Added)" class="w-full column g-10">
                <input type="hidden" class="input" name="_token" value="{{ @csrf_token() }}">
@@ -53,12 +53,27 @@
         " placeholder="Enter 10 digits account number" name="account_number" type="number" class="w-full inp input required account-number h-full no-border br-10 bg-transparent">
                 </div>
                   <label for="">Account Bank</label>
-                <div onclick="SlideUp()" style="border:0.1px solid var(--bg-lighter)" class="cont row align-center space-between g-10 p-10 no-select w-full h-50 bg-light">
-                 <input type="hidden" class="bank-code">
+                <div style="border:0.1px solid var(--bg-lighter)" class="cont row align-center space-between g-10 no-select w-full h-50 bg-light">
+                 {{-- <input type="hidden" class="bank-code"> --}}
                  <input type="hidden" name="bank_name" class="inp bank-name input required">
-                    <span class="bank-selected">Select Bank</span>
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="CurrentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                  <select onchange="
+                   if((document.querySelector('.account-number').value).length == 10){
+      document.querySelector('.verifying').classList.remove('display-none');
+      document.querySelector('.verifying').classList.remove('success');
+       document.querySelector('.verifying').classList.remove('error');
+        document.querySelector('.verifying').classList.remove('resolved');
+          document.querySelector('button.post').classList.add('disabled');
+       document.querySelector('.verifying span').innerHTML='VERIFYING ACCOUNT NAME....'; 
+        GetRequest(event,'{{ url('users/get/bank/auto/verify') }}?account_number=' + document.querySelector('.account-number').value + '&bank_code=' + this.value,document.createElement('div'),MyFunc.Verified);
 
+        }
+                  " name="bank_name" class="inp input w-full h-full border-none bg-transparent">
+                     <option value="" selected disabled>Select Bank....</option>
+                      @foreach (Banks()->data as $data)
+                            <option value="{{ $data->code }}">{{ $data->name }}</option>
+                      @endforeach
+                  </select>
+                  
                 </div>
                 <div class="bg-green-transparent display-none verifying row g-5 align-center no-select w-full br-10 p-10">
                     <svg fill="currentColor" height="30" width="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" transform="translate(12, 12) scale(0)"><animateTransform id="spinner_XR07" begin="0;spinner_npiH.begin+0.4s" attributeName="transform" calcMode="spline" type="translate" dur="1.2s" values="12 12;0 0" keySplines=".52,.6,.25,.99"/><animateTransform begin="0;spinner_npiH.begin+0.4s" attributeName="transform" calcMode="spline" additive="sum" type="scale" dur="1.2s" values="0;1" keySplines=".52,.6,.25,.99"/><animate begin="0;spinner_npiH.begin+0.4s" attributeName="opacity" calcMode="spline" dur="1.2s" values="1;0" keySplines=".52,.6,.25,.99"/></path><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" transform="translate(12, 12) scale(0)"><animateTransform id="spinner_r5ci" begin="spinner_XR07.begin+0.4s" attributeName="transform" calcMode="spline" type="translate" dur="1.2s" values="12 12;0 0" keySplines=".52,.6,.25,.99"/><animateTransform begin="spinner_XR07.begin+0.4s" attributeName="transform" calcMode="spline" additive="sum" type="scale" dur="1.2s" values="0;1" keySplines=".52,.6,.25,.99"/><animate begin="spinner_XR07.begin+0.4s" attributeName="opacity" calcMode="spline" dur="1.2s" values="1;0" keySplines=".52,.6,.25,.99"/></path><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,20a9,9,0,1,1,9-9A9,9,0,0,1,12,21Z" transform="translate(12, 12) scale(0)"><animateTransform id="spinner_npiH" begin="spinner_XR07.begin+0.8s" attributeName="transform" calcMode="spline" type="translate" dur="1.2s" values="12 12;0 0" keySplines=".52,.6,.25,.99"/><animateTransform begin="spinner_XR07.begin+0.8s" attributeName="transform" calcMode="spline" additive="sum" type="scale" dur="1.2s" values="0;1" keySplines=".52,.6,.25,.99"/><animate begin="spinner_XR07.begin+0.8s" attributeName="opacity" calcMode="spline" dur="1.2s" values="1;0" keySplines=".52,.6,.25,.99"/></path></svg>
@@ -90,35 +105,7 @@
        @endif
     </section>
 @endsection
-@section('slideup_child')
-<strong class="desc c-primary m-right-auto p-10 no-select">Select Bank</strong>
-    @foreach (Banks()->data as $data)
-        <div onclick="
-    try{
-      HideSlideUp();
-      document.querySelector('.bank-selected').innerHTML='{{ $data->name }}';
-      document.querySelector('.bank-code').value={{ $data->code }};
-       document.querySelector('.bank-name').value='{{ $data->name }}';
-      if((document.querySelector('.account-number').value).length == 10){
-      document.querySelector('.verifying').classList.remove('display-none');
-      document.querySelector('.verifying').classList.remove('success');
-       document.querySelector('.verifying').classList.remove('error');
-        document.querySelector('.verifying').classList.remove('resolved');
-          document.querySelector('button.post').classList.add('disabled');
-       document.querySelector('.verifying span').innerHTML='VERIFYING ACCOUNT NAME....'; 
-        GetRequest(event,'{{ url('users/get/bank/auto/verify') }}?account_number=' + document.querySelector('.account-number').value + '&bank_code={{ $data->code }}',document.createElement('div'),MyFunc.Verified);
 
-        }
-    }catch(error){
-    CreateNotify('error',error.stack);
-    }
-        " class="w-full p-10 no-select pointer clip-10 br-10 br-10 row align-center g-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#708090" viewBox="0 0 256 256"><path d="M24,104H48v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16H208V104h24a8,8,0,0,0,4.19-14.81l-104-64a8,8,0,0,0-8.38,0l-104,64A8,8,0,0,0,24,104Zm40,0H96v64H64Zm80,0v64H112V104Zm48,64H160V104h32ZM128,41.39,203.74,88H52.26ZM248,208a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H240A8,8,0,0,1,248,208Z"></path></svg>
-
-            {{ $data->name }}
-        </div>
-    @endforeach
-@endsection
 @section('js')
     <script class="js">
         window.MyFunc = {

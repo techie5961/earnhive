@@ -507,4 +507,40 @@ class UsersGetRequestController extends Controller
     ]);
     }
     }
+    // daily claim
+    public function DailyClaim(){
+        $general=json_decode(DB::table('settings')->where('key','general_settings')->first()->json ?? '{}');
+        $daily_claim=$general->daily_claim;
+        if(DB::table('transactions')->where('type','like','%daily claim%')->where('user_id',Auth::guard('users')->user()->id)->whereToday('date')->exists()){
+           return response()->json([
+            'status' => 'error',
+            'message' => 'You have already claimed today,check back tomorrow'
+        ]);  
+        }
+        DB::table('users')->where('id',Auth::guard('users')->user()->id)->update([
+            'activities_balance' => DB::raw('activities_balance + '.$daily_claim.'')
+        ]);
+         DB::table('transactions')->insert([
+        'uniqid' => uniqid('TRX'),
+            'user_id' => Auth::guard('users')->user()->id,
+            'type' => 'Daily Claim',
+            'class' => 'credit',
+            'amount' => $daily_claim,
+            'svg' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="16" width="16"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>',
+            'json' => json_encode([
+                'data' => [
+                    
+                ],
+                'wallet' => 'activities_balance'
+            ]),
+            'gateway' => 'automatic',
+            'status' => 'success',
+            'updated' => Carbon::now(),
+            'date' => Carbon::now()
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Daily claim successfull'
+        ]);
+    }
 }

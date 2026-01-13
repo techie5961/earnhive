@@ -207,7 +207,8 @@ class AdminsPostRequestController extends Controller
             'referral' => [
                 'first' => request('first_level_ref'),
                 'second' => request('second_level_ref')
-            ] 
+            ],
+            'daily_claim' => request('daily_claim') 
         ];
         if(DB::table('settings')->where('key',$key)->exists()){
             DB::table('settings')->where('key',$key)->update([

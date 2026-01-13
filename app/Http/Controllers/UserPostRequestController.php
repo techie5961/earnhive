@@ -20,7 +20,7 @@ class UserPostRequestController extends Controller
         $username=strtolower(str_replace(['-',' '],'_',request()->input('username')));
         $phone=request()->input('phone') ?? null;
         $country='nigeria';
-        $avatar='avatar.jpeg';
+        $avatar='avatar.jpeg?v=1.1';
            
         if(DB::table('users')->where('username',$username)->exists()){
             return response()->json([
