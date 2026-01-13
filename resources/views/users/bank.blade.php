@@ -40,23 +40,26 @@
                 <div style="border:0.1px solid var(--bg-lighter)" class="cont row align-center w-full h-50 bg-light">
                     <input oninput="
 
-      if((document.querySelector('.account-number').value).length == 10 &&   document.querySelector('.bank-code').value !== ''){
+      if((document.querySelector('.account-number').value).length == 10 &&   document.querySelector('select[name=bank_name]').value !== ''){
         document.querySelector('.verifying').classList.remove('display-none');
          document.querySelector('.verifying').classList.remove('success');
        document.querySelector('.verifying').classList.remove('error');
         document.querySelector('.verifying').classList.remove('resolved');
           document.querySelector('button.post').classList.add('disabled');
-          document.querySelector('.verifying span').innerHTML='VERIFYING ACCOUNT NAME....'; 
-      GetRequest(event,'{{ url('users/get/bank/auto/verify') }}?account_number=' + document.querySelector('.account-number').value + '&bank_code=' +   document.querySelector('.bank-code').value,document.createElement('div'),MyFunc.Verified);
+          document.querySelector('.verifying span').innerHTML='VERIFYING ACCOUNT NAME....';
+          let bank_code=document.querySelector('select[name=bank_name]').options[document.querySelector('select[name=bank_name]').selectedIndex].dataset.code;
+
+      GetRequest(event,'{{ url('users/get/bank/auto/verify') }}?account_number=' + document.querySelector('.account-number').value + '&bank_code=' +   bank_code,document.createElement('div'),MyFunc.Verified);
 
         }
         " placeholder="Enter 10 digits account number" name="account_number" type="number" class="w-full inp input required account-number h-full no-border br-10 bg-transparent">
                 </div>
                   <label for="">Account Bank</label>
                 <div style="border:0.1px solid var(--bg-lighter)" class="cont row align-center space-between g-10 no-select w-full h-50 bg-light">
-                 {{-- <input type="hidden" class="bank-code"> --}}
+                 <input type="hidden" class="bank-code">
                  <input type="hidden" name="bank_name" class="inp bank-name input required">
                   <select onchange="
+                
                    if((document.querySelector('.account-number').value).length == 10){
       document.querySelector('.verifying').classList.remove('display-none');
       document.querySelector('.verifying').classList.remove('success');
@@ -70,7 +73,7 @@
                   " name="bank_name" class="inp input w-full h-full border-none bg-transparent">
                      <option value="" selected disabled>Select Bank....</option>
                       @foreach (Banks()->data as $data)
-                            <option value="{{ $data->code }}">{{ $data->name }}</option>
+                            <option data-code="{{ $data->code }}" value="{{ $data->name }}">{{ $data->name }}</option>
                       @endforeach
                   </select>
                   
