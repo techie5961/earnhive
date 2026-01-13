@@ -482,7 +482,7 @@
 
            },
            CheckIn : async function(element){
-           try{
+           
             element.querySelector('.title').innerHTML='Claiming..';
            let response=await fetch('{{ url('users/get/daily/claim') }}');
            if(response.ok){
@@ -491,12 +491,10 @@
             element.querySelector('.title').innerHTML='Daily Claim';
 
            }else{
-            CreateNotify('error',response.status);
+            // CreateNotify('error',response.status);
             element.querySelector('.title').innerHTML='Daily Claim';
            }
-           }catch(error){
-            CreateNotify('error',error.stack)
-           }
+           
            }
         }
         MyFunc.Style();

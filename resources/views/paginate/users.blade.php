@@ -55,7 +55,7 @@
                </div>
                <div class="column align-center g-2">
             
-                  <strong class="font-1">- {!! Currency(Auth::guard('users')->user()->id)  !!}
+                  <strong class="font-1">{!! Currency(Auth::guard('users')->user()->id)  !!}
                 {{ number_format($data->amount,2) }}</strong> 
              
                 <div class="row m-left-auto {{ $data->status == 'success' ? 'c-green' : ($data->status == 'rejected' ? 'c-red' : 'c-gold') }}">{{ $data->status }}</div>

@@ -13,8 +13,6 @@ class UsersGetRequestController extends Controller
     // claim task reward
     public function ClaimTaskReward(){
         $task=DB::table('tasks')->where('id',request('id'))->first();
-         $package=DB::table('packages')->where('id',json_decode(Auth::guard('users')->user()->package)->id)->first() ?? json_decode(Auth::guard('users')->user()->package);
-        $task->reward=$package->earning_per_click;
         DB::table('users')->where('id',Auth::guard('users')->user()->id)->update([
             'activities_balance' => DB::raw('activities_balance + '.$task->reward.''),
             'updated' => Carbon::now()

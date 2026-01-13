@@ -70,20 +70,19 @@ class UsersDashboardController extends Controller
             return CheckPackage();
         }
     //   return json_decode(Auth::guard('users')->user()->package)->earning_per_click;
-    $package=DB::table('packages')->where('id',json_decode(Auth::guard('users')->user()->package)->id)->first() ?? json_decode(Auth::guard('users')->user()->package);
         $tasks=DB::table('tasks')->where('status','active')->whereNotIn('id',function($q){
           $q->select('task_id')->from('task_proofs')->where('user_id',Auth::guard('users')->user()->id);
         })->orderBy('date','desc')->paginate(10);
         if(request()->has('paginate')){
             return view('paginate.users',[
                 'tasks' => $tasks,
-                'reward' => $package->earning_per_click
+               
             ]);
         }
     
         return view('users.tasks',[
             'tasks' => $tasks,
-            'reward' => $package->earning_per_click
+            
         ]);
     }
    

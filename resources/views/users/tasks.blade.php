@@ -25,7 +25,7 @@
                     </div>
                      <strong class="desc">{{ $data->title ?? 'null' }}</strong>
                    </div>
-                    <div class="p-y-5 p-x-10 c-white bg-green font-1 br-5 bold">Task Reward : {!! Currency(Auth::guard('users')->user()->id)  !!}{{ number_format($reward ?? 0,2) }}</div>
+                    <div class="p-y-5 p-x-10 c-white bg-green font-1 br-5 bold">Task Reward : {!! Currency(Auth::guard('users')->user()->id)  !!}{{ number_format($data->reward ?? 0,2) }}</div>
                 </div>
                 <hr class="bg-primary">
                 <span class="text-average"> - Click the button below to perform the task <br> - Note that not performing task would lead to permanent banning of your account so be warned.</span>
