@@ -66,9 +66,7 @@ class UsersDashboardController extends Controller
     public function Tasks(){
     //    return json_decode(Auth::guard('users')->user()->package)->earning_per_click;
        
-        if(!json_decode(Auth::guard('users')->user()->package)->earning_per_click){
-            return CheckPackage();
-        }
+       
     //   return json_decode(Auth::guard('users')->user()->package)->earning_per_click;
         $tasks=DB::table('tasks')->where('status','active')->whereNotIn('id',function($q){
           $q->select('task_id')->from('task_proofs')->where('user_id',Auth::guard('users')->user()->id);
