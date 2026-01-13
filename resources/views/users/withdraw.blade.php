@@ -114,8 +114,8 @@
                   <div style="border:1px solid var(--bg-lighter)" class="h-50 br-5 cont w-full border-1 bg-light">
                     <select name="wallet" class="inp input border-none required w-full h-full bg-transparent">
                         <option value="" selected disabled>Select Wallet....</option>
-                        <option value="activities_balance">Activities Wallet - &#8358; {{ Auth::guard('users')->user()->activities_balance }}</option>
-                         <option value="affiliate_balance">Affiliate Wallet - &#8358; {{ Auth::guard('users')->user()->affiliate_balance }}</option>
+                        <option value="activities_balance">Activities Wallet - &#8358;{{ Auth::guard('users')->user()->activities_balance }}</option>
+                         <option value="affiliate_balance">Affiliate Wallet - &#8358;{{ Auth::guard('users')->user()->affiliate_balance }}</option>
                     </select>
                 </div>
               
