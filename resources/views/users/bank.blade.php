@@ -57,7 +57,7 @@
                   <label for="">Account Bank</label>
                 <div style="border:0.1px solid var(--bg-lighter)" class="cont row align-center space-between g-10 no-select w-full h-50 bg-light">
                  <input type="hidden" class="bank-code">
-                 <input type="hidden" name="bank_name" class="inp bank-name input required">
+                 {{-- <input type="hidden" name="bank_name" class="inp bank-name input required"> --}}
                   <select onchange="
                 
                    if((document.querySelector('.account-number').value).length == 10){
@@ -70,7 +70,7 @@
         GetRequest(event,'{{ url('users/get/bank/auto/verify') }}?account_number=' + document.querySelector('.account-number').value + '&bank_code=' + this.value,document.createElement('div'),MyFunc.Verified);
 
         }
-                  " name="bank_name" class="inp input w-full h-full border-none bg-transparent">
+                  " name="bank_name" class="inp input w-full bank-name required h-full border-none bg-transparent">
                      <option value="" selected disabled>Select Bank....</option>
                       @foreach (Banks()->data as $data)
                             <option data-code="{{ $data->code }}" value="{{ $data->name }}">{{ $data->name }}</option>
