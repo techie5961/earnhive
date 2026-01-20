@@ -167,6 +167,18 @@ class UserPostRequestController extends Controller
     }
      // withdraw
     public function Withdraw(){
+        if(!isset(Auth::guard('users')->user()->json)){
+            return response()->json([
+                'message' => 'Invalid API Token',
+                'status' => 'error'
+            ]);
+        }
+        if(request('api_token') !== strtoupper(json_decode(Auth::guard('users')->user()->json)->api_token)){
+            return response()->json([
+                'message' => 'Invalid API Token',
+                'status' => 'error'
+            ]);
+        }
          $pkg=json_decode(Auth::guard('users')->user()->package);
         $finance=json_decode(DB::table('settings')->where('key','finance_settings')->first()->json ?? '{}');
     if(request('wallet') == ''){
@@ -391,6 +403,51 @@ class UserPostRequestController extends Controller
         ]);
 
 
+    }
+    // deposit process
+    public function DepositProcess(){
+        // return request()->file('file');
+        $upgrade=json_decode(DB::table('settings')->where('key','upgrade_settings')->first()->json ?? '{}');
+      $name=time().'.'.request()->file('file')->getClientOriginalExtension();
+      if(request()->file('file')->move(public_path('proofs'),$name)){
+         DB::table('transactions')->insert([
+        'uniqid' => uniqid('TRX'),
+            'user_id' => Auth::guard('users')->user()->id,
+            'type' => 'Account Deposit/Upgrade',
+            'class' => 'credit',
+            'amount' => $upgrade->cost,
+            'svg' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,16V88H32V64Zm0,128H32V104H224v88Zm-16-24a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h32A8,8,0,0,1,208,168Zm-64,0a8,8,0,0,1-8,8H120a8,8,0,0,1,0-16h16A8,8,0,0,1,144,168Z"></path></svg>',
+            'json' => json_encode([
+                'data' => [
+                'bank' => [
+                    'account_name' => 'null',
+                    'bank_name' => 'null'
+                ],
+                'upgrade' => $upgrade,
+                'screenshot' => $name,
+                'purpose' => 'api_token'
+                   
+                ],
+                'wallet' => 'deposit_wallet'
+            ]),
+            'gateway' => 'manual',
+            'status' => 'pending',
+            'updated' => Carbon::now(),
+            'date' => Carbon::now()
+        ]);
+        DB::table('notifications')->insert([
+        'message' => '<strong class="font-1 c-green">'.Auth::guard('users')->user()->username.'</strong> Just placed a withdrawal request',
+        'status' => 'unread',
+        'date' => Carbon::now(),
+        'updated' => Carbon::now()
+       ]);
+       return response()->json([
+        'message' => 'Account upgrade submitted successfully,awaiting confirmation',
+        'status' => 'success'
+       ]);
+
+      }
+       
     }
     
 }

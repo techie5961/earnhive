@@ -117,6 +117,14 @@
                         <strong class="font-1 c-green">{{ $data->bank->account_number ?? ''  }} | {{ $data->bank->bank_name ?? ''  }} | {{ $data->bank->account_name ?? ''  }}</strong>
                     @endif
                 </div>
+
+                 <div class="row align-center g-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"></path></svg>
+                     <span>API Token:</span>
+                    <strong class="font-1 c-green">{{ strtoupper(json_decode($data->json ?? '{}')->api_token ?? 'Not yet purchased') }}</strong>
+                </div>
+                
+
               <div class="w-full g-10 grid grid-3 place-center ">
 
                  @if ($data->status == 'active')
@@ -127,8 +135,12 @@
               
                  @endif
                   <button onclick="window.open('{{ url('admins/login/as/user?id='.$data->id.'') }}')" class="btn-blue-3d c-white clip-5 br-5 h-full w-full">Login as User</button>
-               {{-- <button onclick="window.location.href='{{ url('admins/mark/as/vendor?id='.$data->id.'&type='.$data->type.'') }}'" class="clip-5 text-primary br-5 h-full w-full btn-primary-3d">{{ $data->type == 'user' ? 'Mark' : 'UnMark' }} as Vendor</button> --}}
-              
+              @isset($data->json)
+                  <button onclick="window.location.href='{{ url('admins/get/revoke/api/token?id='.$data->id.'') }}'" class="btn-primary-3d clip-5 br-5">Revoke API Token</button>
+                @else
+                    <button onclick="window.location.href='{{ url('admins/get/assign/api/token?id='.$data->id.'') }}'" class="btn-primary-3d clip-5 br-5">Assign API Token</button>
+             
+                  @endisset
                 </div>  
              </div>
              <form action="{{ url('admins/post/credit/user/process') }}" method="POST" onsubmit="PostRequest(event,this,MyFunc.reload)" class="w-full column bg-white br-10 box-shadow p-10 g-10">

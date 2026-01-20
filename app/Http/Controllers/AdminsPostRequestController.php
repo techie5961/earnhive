@@ -232,6 +232,38 @@ class AdminsPostRequestController extends Controller
             ]);
         }
     }
+     // upgrade settings
+    public function UpgradeSettings(){
+        $key='upgrade_settings';
+        $json=[
+            'cost' => request('cost'),
+            'account_number' => request('account_number'),
+            'bank_name' => request('bank_name'),
+            'account_name' => request('account_name'),
+          
+        ];
+        if(DB::table('settings')->where('key',$key)->exists()){
+            DB::table('settings')->where('key',$key)->update([
+                'json' => json_encode($json),
+                'updated' => Carbon::now()
+            ]);
+            return response()->json([
+                'message' => 'settings updated successfully',
+                'status' => 'success'
+            ]);
+        }else{
+             DB::table('settings')->insert([
+                'key' => $key,
+                'json' => json_encode($json),
+                'updated' => Carbon::now(),
+                'date' => Carbon::now()
+            ]);
+            return response()->json([
+                'message' => 'settings saved successfully',
+                'status' => 'success'
+            ]);
+        }
+    }
      // social settings
     public function SocialSettings(){
         $key='social_settings';

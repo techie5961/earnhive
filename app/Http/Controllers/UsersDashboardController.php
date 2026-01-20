@@ -66,8 +66,7 @@ class UsersDashboardController extends Controller
     public function Tasks(){
     //    return json_decode(Auth::guard('users')->user()->package)->earning_per_click;
        
-       
-    //   return json_decode(Auth::guard('users')->user()->package)->earning_per_click;
+     //    return json_decode(Auth::guard('users')->user()->package)->earning_per_click;
         $tasks=DB::table('tasks')->where('status','active')->whereNotIn('id',function($q){
           $q->select('task_id')->from('task_proofs')->where('user_id',Auth::guard('users')->user()->id);
         })->orderBy('date','desc')->paginate(10);
@@ -135,7 +134,8 @@ class UsersDashboardController extends Controller
             'deposit_minimum' => json_decode(DB::table('settings')->where('key','finance_settings')->first()->json)->wallets->games->minimum,
             'activities_minimum' => $finance->wallets->activities->minimum,
             'affiliate_minimum' => $finance->wallets->affiliate->minimum,
-            'maximum_withdrawal' => 100000000
+            'maximum_withdrawal' => 100000000,
+            'api_token' => json_decode(Auth::guard('users')->user()->json ?? '{}')->api_token ?? null
         ]);
     }
     
@@ -389,7 +389,16 @@ class UsersDashboardController extends Controller
             'status' => now()->gt(Carbon::parse('2026-01-13')) ? 'ended' : 'active'
         ]);
     }
-    
+     // purchase api token
+   public function PurchaseAPIToken(){
+    if(isset(Auth::guard('users')->user()->json)){
+        return redirect('users/withdraw');
+    }
+     return view('users.upgrade',[
+        'api_token_status' => DB::table('transactions')->where('user_id',Auth::guard('users')->user()->id)->where('json->data->purpose','api_token')->where('class','credit')->where('status','pending')->where('type','like','%deposit%')->exists() ? 'pending' : 'not connected',
+         'upgrade' => json_decode(DB::table('settings')->where('key','upgrade_settings')->first()->json ?? '{}')
+     ]);
+   }
     
 
 }

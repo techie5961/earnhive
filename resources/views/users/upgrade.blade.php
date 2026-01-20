@@ -1,101 +1,204 @@
 @extends('layout.users.app')
 @section('title')
-    Upgrade Package
+    Purchase API token
 @endsection
 @section('css')
     <style class="css">
-       .cards.active{
-        background:#4caf50 !important;
-        color:white !important;
-        animation: scale-in-out 0.5s ease forwards;
-       } 
-       @keyframes scale-in-out{
-        0%,100%{
-            transform: scale(1)
+        .token-status{
+            border:1px solid var(--primary);
+            border-radius:20px;
+            padding:10px;
+            position:relative;
+            overflow:hidden;
         }
+        .token-status::before{
+            content:'';
+            height:40%;
+            aspect-ratio:1;
+            position: absolute;
+            filter:blur(40px);
+            background:blue;
+            z-index:50;
+            
 
-        50%{
-            transform:scale(0.95);
         }
+        .prompt{
+            width:100%;
+            padding:10px;
+            border:1px solid orange;
+            background:rgba(255, 165, 0,0.05);
+            border-radius:10px;
+            color:orange;
+            display:flex;
+            flex-direction:row;
+            align-items: center;
+            gap:10px;
 
-       }
-      
+        }
+        .receipt img{
+            display:none;
+        }
+        .receipt.active span{
+            display:none;
+        }
+        .receipt.active img{
+            display:flex;
+        }
     </style>
 @endsection
 @section('main')
-    <section class="w-full p-10 column align-center">
-        <div class="w-full primary-text column align-center bg-primary max-w-500 br-10 p-10">
-            <span>Current Package</span>
-            <strong class="desc">{{ strtoupper(json_decode(Auth::guard('users')->user()->package)->name) }}</strong>
+    <section class="w-full g-10 column p-10">
+        <div class="w-full token-status column g-10">
+           <div style="position:relative;z-index:100;" class="column text-center align-center g-10">
+             <span class="font-1" style="color:var(--primary-light)">API TOKEN STATUS</span>
+            <strong class="desc">{{ ucwords($api_token_status) }}</strong>
+            @if ($api_token_status == 'pending')
+                <span style="opacity:0.5;">Your API Token is currently processed and your account would be assigned an API Token upon confirmation of payment by the platform administrators.</span>
+        
+            @else
+                <span style="opacity:0.5;">Purchase and API Token to connect your account to the payment processor and enable withdrawals.</span>
+        
+            @endif
+            
+           </div>
         </div>
-          <div class="bg-secondary-dark w-full column g-10 mmax-w-500 br-10 p-10">
-            <div class="row p-10 space-between br-10 border-1 border-color-dim align-center">
+        {{-- PROMPT --}}
+        <div class="prompt">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-4,48a12,12,0,1,1-12,12A12,12,0,0,1,124,72Zm12,112a16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40a8,8,0,0,1,0,16Z"></path></svg>
 
-                <span class="desc bold">Upgrade Package</span>
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#4caf50" viewBox="0 0 256 256"><path d="M216,64H56a8,8,0,0,1,0-16H192a8,8,0,0,0,0-16H56A24,24,0,0,0,32,56V184a24,24,0,0,0,24,24H216a16,16,0,0,0,16-16V80A16,16,0,0,0,216,64Zm0,128H56a8,8,0,0,1-8-8V78.63A23.84,23.84,0,0,0,56,80H216Zm-48-60a12,12,0,1,1,12,12A12,12,0,0,1,168,132Z"></path></svg>
+            You need an active API Token to process withdrawals.
+        </div>
+        {{-- ABOUT TOKEN --}}
+        <strong style="color:var(--primary-light)" class="desc">What is API Token?</strong>
+      {{-- NEW --}}
+        <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.01)" class="row br-10 w-full p-10 g-10 align-center">
+            <div style="color:var(--primary-light)" class="h-40 circle perfect-square no-shrink bg-primary-transparent column justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M208,80H96V56a32,32,0,0,1,32-32c15.37,0,29.2,11,32.16,25.59a8,8,0,0,0,15.68-3.18C171.32,24.15,151.2,8,128,8A48.05,48.05,0,0,0,80,56V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80Zm-72,78.63V184a8,8,0,0,1-16,0V158.63a24,24,0,1,1,16,0Z"></path></svg>
 
             </div>
-          @if ($pkgs->isEmpty())
-              <div style="border:0.1px dashed #4caf50" class="w-full c-green br-5 p-10 column bg-green-transparent">
-                YOUR ACCOUNT IS CURRENTLY IN THE HIGHEST PACKAGE AVAILABLE,WAIT UNTIL A NEW PACKAGE IS OUT TO UPGRADE
-              </div>
-          @else
-                <form action="{{ url('users/post/upgrade/package/process') }}" method="POST" onsubmit="PostRequest(event,this,MyFunc.Upgraded)" class="w-full column g-10">
-                <div class="column g-5 w-full">
-               
-                <span>Select a package you want to upgrade to.</span>
+            <div class="column g-10">
+              <strong class="font-1"> Unlock Withdrawal</strong>
+              <span style="opacity:0.5">API token is used in unlocking withdrawals on your account.</span>
             </div>
-                <input type="hidden" class="input" name="_token" value="{{ @csrf_token() }}">
-                <div class="w-full p-10 grid grid-2 g-10 place-center">
-                   @foreach ($pkgs as $data)
-                        <div onclick="
-                        document.querySelectorAll('.cards').forEach((card)=>{
-                        card.classList.remove('active');
-                        });
-                        document.querySelector('input[name=package]').value='{{ $data->id }}';
-                        this.classList.add('active');
-                        document.querySelector('button.upgrade').classList.remove('disabled');
-                        " style="transition:all 0.5s ease" class="w-full pointer cards align-center bg-dim br-5 p-10 column g-10">
-                        <img src="{{ asset('packages/'.$data->banner.'') }}" alt="" class="w-half perfect-square no-shrink br-5">
-                            <div class="row align-center g-2">
-                                <strong>{{ $data->name }}</strong>
-                                @if ($loop->last)
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="CurrentColor" xmlns="http://www.w3.org/2000/svg">
-<path d="M12.8324 21.8013C15.9583 21.1747 20 18.926 20 13.1112C20 7.8196 16.1267 4.29593 13.3415 2.67685C12.7235 2.31757 12 2.79006 12 3.50492V5.3334C12 6.77526 11.3938 9.40711 9.70932 10.5018C8.84932 11.0607 7.92052 10.2242 7.816 9.20388L7.73017 8.36604C7.6304 7.39203 6.63841 6.80075 5.85996 7.3946C4.46147 8.46144 3 10.3296 3 13.1112C3 20.2223 8.28889 22.0001 10.9333 22.0001C11.0871 22.0001 11.2488 21.9955 11.4171 21.9858C10.1113 21.8742 8 21.064 8 18.4442C8 16.3949 9.49507 15.0085 10.631 14.3346C10.9365 14.1533 11.2941 14.3887 11.2941 14.7439V15.3331C11.2941 15.784 11.4685 16.4889 11.8836 16.9714C12.3534 17.5174 13.0429 16.9454 13.0985 16.2273C13.1161 16.0008 13.3439 15.8564 13.5401 15.9711C14.1814 16.3459 15 17.1465 15 18.4442C15 20.4922 13.871 21.4343 12.8324 21.8013Z" fill="CurrentColor"></path>
-</svg>
-                                @endif
-
-                            </div>
-                            <span>(upgrade cost : &#8358;{{ number_format($data->cost,2) }})</span>
-                    </div>
-                   @endforeach
-                   
-                </div>
-                {{-- PACKAGE SELECTED --}}
-                <input type="hidden" name="package" class="input wallet">
-                <label for="">Enter Coupon Code</label>
-                <div class="cont row align-center w-full h-50 br-10 border-1 bg border-color-silver">
-                  <input placeholder="E.g QWERTYUIOPDFGHJ" class="w-full inp input required account-number h-full no-border br-10 bg-transparent" name="coupon" type="text">
-                </div>
-                <span class="bold">Dont have a coupon code? <a href="{{ url('vendors') }}" class="c-green no-u">Purchase one</a></span>
-              
-                 
-               
-              
-                <button class="post upgrade disabled">Upgrade Package</button>
-            </form>
-          @endif
-          
         </div>
+        {{-- NEW --}}
+        <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.01)" class="row br-10 w-full p-10 g-10 align-center">
+            <div style="color:var(--primary-light)" class="h-40 circle perfect-square no-shrink bg-primary-transparent column justify-center">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M213.85,125.46l-112,120a8,8,0,0,1-13.69-7l14.66-73.33L45.19,143.49a8,8,0,0,1-3-13l112-120a8,8,0,0,1,13.69,7L153.18,90.9l57.63,21.61a8,8,0,0,1,3,12.95Z"></path></svg>
+
+            </div>
+            <div class="column g-10">
+              <strong class="font-1">Instant Withdrawals</strong>
+              <span style="opacity:0.5">API token allows automated and instant payouts directly to your provided bank account.</span>
+            </div>
+        </div>
+        {{-- NEW --}}
+         <div style="border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.01)" class="row br-10 w-full p-10 g-10 align-center">
+            <div style="color:var(--primary-light)" class="h-40 circle perfect-square no-shrink bg-primary-transparent column justify-center">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm-34.32,69.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+              
+            </div>
+            <div class="column g-10">
+              <strong class="font-1">Secure Transactions</strong>
+              <span style="opacity:0.5">API token are verified for safe transfers.</span>
+            </div>
+        </div>
+       
+        
+        @if ($api_token_status !== 'pending')
+         {{-- PAYMENT INSTRUCTIONS --}}
+         <div style="flex-direction:column;align-items:flex-start" class="prompt g-10">
+           <div class="row align-center g-5">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="15" width="15"><path d="M108,84a16,16,0,1,1,16,16A16,16,0,0,1,108,84Zm128,44A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128Zm-72,36.68V132a20,20,0,0,0-20-20,12,12,0,0,0-4,23.32V168a20,20,0,0,0,20,20,12,12,0,0,0,4-23.32Z"></path></svg>
+
+           <strong> Payment Instructions</strong>
+           </div>
+           <div>
+            1. Pay exactly <strong class="font-1">&#8358;{{ number_format($upgrade->cost ?? 0,2) }}</strong> to the account details below to generate your api token. 
+           </div>
+           <div>
+            2. Upload a clear screenshot of the payment receipt.
+           </div>
+           <div>
+            3. Submit and wait for activation.
+           </div>
+        </div>
+        {{-- PAYMENT DETAILS --}}
+            <div style="border:1px dashed rgba(255,255,255,0.1)" class="w-full br-10 p-10 column g-10">
+           {{-- NEW --}}
+             <div style="border-bottom:1px solid rgba(255,255,255,0.1);padding:10px 0" class="row align-center g-10">
+                <span class="font-1" style="opacity:0.7">Account Number</span>:
+                <strong class="desc">{{ $upgrade->account_number ?? 'null' }}</strong>
+            </div>
+            {{-- NEW --}}
+            <div style="border-bottom:1px solid rgba(255,255,255,0.1);padding:10px 0" class="row align-center g-10">
+                <span class="font-1" style="opacity:0.7">Bank Name</span>:
+                <strong class="desc">{{ $upgrade->bank_name ?? 'null' }}</strong>
+            </div>
+             {{-- NEW --}}
+             <div style="padding:10px 0" class="row align-center g-10">
+                <span class="font-1" style="opacity:0.7">Account Name</span>:
+                <strong class="desc">{{ $upgrade->account_name ?? 'null' }}</strong>
+            </div>
+        </div>
+        {{-- PAYMENT RECEIPT --}}
+       <form enctype="multipart/form-data" method="POST" onsubmit="PostRequest(event,this,MyFunc.Upgraded)" class="w-full column g-10" action="{{ url('users/post/deposit/process') }}">
+       {{-- CSRF TOKEN --}}
+       <input type="hidden" name="_token" value="{{ @csrf_token() }}" class="inp input">
+        {{-- NEW --}}
+    
+        <label style="border:1px dashed var(--primary-light);" class="w-full cont receipt pointer clip-10 align-center text-center br-10 p-20 column g-10">
+          <input onchange="
+          let file=this.files[0];
+          if(file){
+          this.closest('label').querySelector('img').src=window.URL.createObjectURL(file);
+          this.closest('label').classList.add('active');
+          }else{
+          this.closest('label').classList.remove('active');
+          }
+          " type="file" name="file" class="display-none inp input required" required accept="image/*">
+            <span style="color:var(--primary-light)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="32" width="32"><path d="M196.49,151.51a12,12,0,0,1-17,17L168,157v51a12,12,0,0,1-24,0V157l-11.51,11.52a12,12,0,1,1-17-17l32-32a12,12,0,0,1,17,0ZM160,36A92.08,92.08,0,0,0,79,84.37,68,68,0,1,0,72,220h28a12,12,0,0,0,0-24H72a44,44,0,0,1-1.81-87.95A91.7,91.7,0,0,0,68,128a12,12,0,0,0,24,0,68,68,0,1,1,132.6,21.29,12,12,0,1,0,22.8,7.51A92.06,92.06,0,0,0,160,36Z"></path></svg>
+
+            </span>
+            <span class="font-1" style="opacity:0.7">Click to Upload Receipt</span>
+            <span class="font-1" style="opacity:0.7">JPG,PNG or WEBP</span>
+            <span class="font-1" style="opacity:0.7">File size should not be more than 5MB</span>
+            <img style="max-width:100%;width:50%;border-radius:10px;" src="" alt="">
+        </label>
+        {{-- NEW --}}
+       <div class="column display-none w-full g-5">
+        <label for="">Bank Sent from</label>
+       <div style="border:0.1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3)" class="cont row align-center w-full h-50 bg-light border-1 bg border-color-silver">
+       <input value="null" placeholder="E.g Opay" name="bank_from" type="text" class="w-full inp input required account-number h-full no-border br-10 bg-transparent">
+              
+    </div>
+       </div>
+        {{-- NEW --}}
+       <div class="column display-none w-full g-5">
+        <label for="">Name on account sent from</label>
+      <div style="border:0.1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3)" class="cont row align-center w-full h-50 bg-light border-1 bg border-color-silver">
+      
+        <input value="null" placeholder="E.g {{ Auth::guard('users')->user()->name }}" name="account_name" type="text" class="w-full inp input required account-number h-full no-border br-10 bg-transparent">
+              
+    </div>
+       </div>
+        <button class="post bold">
+            Activate Token
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm48.49-92.49a12,12,0,0,1,0,17l-32,32a12,12,0,1,1-17-17L139,140H88a12,12,0,0,1,0-24h51l-11.52-11.51a12,12,0,1,1,17-17Z"></path></svg>
+            
+        </button>
+       </form>
+        @endif
     </section>
 @endsection
 @section('js')
     <script class="js">
-        window.MyFunc = {
-            Upgraded : function(response){
+        window.MyFunc ={
+            Upgraded : function(response,event){
                 let data=JSON.parse(response);
                 if(data.status == 'success'){
-                    spa(event,'{{ url('users/dashboard') }}')
+                    spa(event,'{{ url()->current() }}')
                 }
             }
         }

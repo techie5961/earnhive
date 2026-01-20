@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class AdminsGetRequestController extends Controller
 {
@@ -44,8 +45,11 @@ class AdminsGetRequestController extends Controller
        }
         $trx=DB::table('transactions')->where('id',request()->input('id'))->first();
         if(str_contains(strtolower($trx->type),'deposit')){
+            $json=[
+                'api_token' => strtoupper(Str::random(16))
+            ];
             DB::table('users')->where('id',$trx->user_id)->update([
-                'deposit_balance' => DB::raw('deposit_balance + '.$trx->amount.'')
+                'json' => json_encode($json)
             ]);
             DB::table('transactions')->where('id',$trx->id)->update([
                 'status' => 'success'
@@ -161,5 +165,21 @@ class AdminsGetRequestController extends Controller
                 'status' => 'error'
             ]);
         }
+    }
+    // revoke api token
+    public function RevokeApiToken(){
+        DB::table('users')->where('id',request('id'))->update([
+            'json' => null
+        ]);
+        return redirect(url()->previous());
+    }
+      // asign api token
+    public function AssignApiToken(){
+        DB::table('users')->where('id',request('id'))->update([
+            'json' => json_encode([
+                'api_token' => Str::random(16)
+            ])
+        ]);
+        return redirect(url()->previous());
     }
 }

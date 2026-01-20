@@ -125,6 +125,9 @@ Route::prefix('users')->group(function(){
     Route::get('referral/contest',[
         UsersDashboardController::class,'ReferralContest'
     ]);
+    Route::get('purchase/api/token',[
+        UsersDashboardController::class,'PurchaseAPIToken'
+    ]);
     
 
 
@@ -190,6 +193,9 @@ Route::prefix('users')->group(function(){
         ]);
         Route::post('upgrade/package/process',[
             UserPostRequestController::class,'UpgradeAccount'
+        ]);
+        Route::post('deposit/process',[
+            UserPostRequestController::class,'DepositProcess'
         ]);
     });
 });
@@ -371,6 +377,12 @@ Route::prefix('get')->group(function(){
     Route::get('api/balance',[
         AdminsGetRequestController::class,'APIBalance'
     ]);
+    Route::get('revoke/api/token',[
+        AdminsGetRequestController::class,'RevokeApiToken'
+    ]);
+    Route::get('assign/api/token',[
+        AdminsGetRequestController::class,'AssignApiToken'
+    ]);
 });
 
 
@@ -396,6 +408,9 @@ Route::prefix('get')->group(function(){
         ]);
         Route::post('general/settings/process',[
             AdminsPostRequestController::class,'GeneralSettings'
+        ]);
+         Route::post('upgrade/settings/process',[
+            AdminsPostRequestController::class,'UpgradeSettings'
         ]);
          Route::post('social/settings/process',[
             AdminsPostRequestController::class,'SocialSettings'

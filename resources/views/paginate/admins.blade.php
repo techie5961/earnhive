@@ -246,7 +246,21 @@
                     <strong class="font-1 m-left-auto">{{ $data->json->data->bank->account_name }}</strong>
                 </div>
             </div>
-            
+                 <div class="row align-center m-top-10 w-full g-10 space-between">
+               
+                 <div class="column g-2">
+                 
+                    <strong class="font-1 m-right-auto">Transaction Receipt</strong>
+                </div>
+                 <div class="column g-2">
+                 
+                    <button onclick="window.open('{{ url('proofs/'.($data->json->data->screenshot ?? '').'') }}')" class="btn-primary-3d clip-5 br-5">
+                      Open 
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M228,104a12,12,0,0,1-24,0V69l-59.51,59.51a12,12,0,0,1-17-17L187,52H152a12,12,0,0,1,0-24h64a12,12,0,0,1,12,12Zm-44,24a12,12,0,0,0-12,12v64H52V84h64a12,12,0,0,0,0-24H48A20,20,0,0,0,28,80V208a20,20,0,0,0,20,20H176a20,20,0,0,0,20-20V140A12,12,0,0,0,184,128Z"></path></svg>
+
+                    </button>
+                </div>
+            </div>
             @endif
             <div class="row w-full m-top-10 align-center space-between">
               <strong class="desc m-left-auto c-green">{!! Currency($data->user->id)  !!}{{ number_format($data->amount,2) }}</strong>

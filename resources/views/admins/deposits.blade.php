@@ -141,7 +141,21 @@
                     <strong class="font-1 m-left-auto">{{ $data->json->data->bank->account_name }}</strong>
                 </div>
             </div>
-            
+             <div class="row align-center m-top-10 w-full g-10 space-between">
+               
+                 <div class="column g-2">
+                 
+                    <strong class="font-1 m-right-auto">Transaction Receipt</strong>
+                </div>
+                 <div class="column g-2">
+                 
+                    <button onclick="window.open('{{ url('proofs/'.($data->json->data->screenshot ?? '').'') }}')" class="btn-primary-3d clip-5 br-5">
+                      Open 
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M228,104a12,12,0,0,1-24,0V69l-59.51,59.51a12,12,0,0,1-17-17L187,52H152a12,12,0,0,1,0-24h64a12,12,0,0,1,12,12Zm-44,24a12,12,0,0,0-12,12v64H52V84h64a12,12,0,0,0,0-24H48A20,20,0,0,0,28,80V208a20,20,0,0,0,20,20H176a20,20,0,0,0,20-20V140A12,12,0,0,0,184,128Z"></path></svg>
+
+                    </button>
+                </div>
+            </div>
             @endif
             <div class="row w-full m-top-10 align-center space-between">
               <strong class="desc m-left-auto c-green">{!! Currency($data->user->id)  !!}{{ number_format($data->amount,2) }}</strong>
@@ -157,7 +171,7 @@
                 let data=`<div class='align-center column g-5 text-center'>
                   <svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' fill='blue' viewBox='0 0 256 256'><path d='M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm-34.32,69.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z'></path></svg>
                   <strong class='desc c-blue'>Security Check</strong>
-                 <span> Are you sure you want to approve this deposit, <strong class='desc c-green'>{{ $data->user->username }}</strong> would be creditted the sum of <strong class='desc c-green'>{!! Currency($data->user->id)  !!}{{ number_format($data->amount,2) }}</strong> into his/her deposit wallet</span></div>
+                 <span> Are you sure you want to approve this deposit/upgrade, <strong class='desc c-green'>{{ $data->user->username }}</strong> would be assigned an API Token to his/her account</span></div>
                 <button onclick=&quot;GetRequest(event,'{{ url('admins/get/transaction/approve?id='.$data->id.'') }}',this,MyFunc.Actioned)&quot; class='btn-green-3d c-white w-full clip-5 g-5 br-5'>Yes! i confirm to approve this deposit</button>
                 `;
                 PopUp(data);

@@ -146,13 +146,28 @@
            </div>
         </div>
        @endif
+       
+       @isset(Auth::guard('users')->user()->json)
+            {{-- API TOKEN --}}
+             <div class="column w-full g-5">
+                   <label for="">API Token</label>
+                <div style="border:1px solid var(--bg-lighter)" class="cont row align-center bg-light w-full h-50">
+                    <input name="api_token" type="text" readonly value="{{ strtoupper(json_decode(Auth::guard('users')->user()->json)->api_token) }}" class="w-full no-select inp input required account-number h-full no-border br-10 bg-transparent">
+                </div>
+             </div>
+                
+                
+                 
+       @endisset
        {{-- WITHDRAWAL AMOUNT --}}
                 <label for="">Withdrawal Amount</label>
-                <div style="border:1px solid var(--bg-lighter)" class="cont row align-center bg-light w-full h-50">
+             <div class="column g-5 w-full">
+                   <div style="border:1px solid var(--bg-lighter)" class="cont row align-center bg-light w-full h-50">
                     <input placeholder="Enter withdrawal amount" name="amount" type="number" class="w-full inp input required account-number h-full no-border br-10 bg-transparent">
                 </div>
                 <span class="minimum_text"></span>
                 
+             </div>
                  
                
               {{-- <div class="w-full column g-2">
@@ -162,7 +177,22 @@
                 {{  config('app.name')}} is not responsible for funds lost due to incorrect information being entered.
                 </span>
               </div> --}}
-                <button class="post clip-0 bold br-0">Place Withdrawal</button>
+              @isset($api_token)
+                <button class="post clip-0 bold br-0">
+                    Place Withdrawal
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm48.49-92.49a12,12,0,0,1,0,17l-32,32a12,12,0,1,1-17-17L139,140H88a12,12,0,0,1,0-24h51l-11.52-11.51a12,12,0,1,1,17-17Z"></path></svg>
+                     
+                </button>
+              @else
+            <div class="w-full row align-center g-10 p-10 br-5 bg-primary-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-4,48a12,12,0,1,1-12,12A12,12,0,0,1,124,72Zm12,112a16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40a8,8,0,0,1,0,16Z"></path></svg>
+
+                <span class="column g-2">API Token required to process withdrawals. <span style="color:aqua" class="u no-select pointer" onclick="spa(event,'{{ url('users/purchase/api/token') }}')">Get API Token</span></span>
+            </div>
+            <button style="opacity:0.3;pointer-events:none;" class="post clip-0 bold br-0">API Token Required</button>
+           
+              @endisset
+               
             </form>
         </div>
     </section>

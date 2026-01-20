@@ -201,6 +201,7 @@ class AdminsDashboardController extends Controller
         return view('admins.settings',[
             'social' => json_decode(DB::table('settings')->where('key','social_settings')->first()->json ?? '{}'),
             'general' => json_decode(DB::table('settings')->where('key','general_settings')->first()->json ?? '{}'),
+            'upgrade' => json_decode(DB::table('settings')->where('key','upgrade_settings')->first()->json ?? '{}'),
             'finance' => json_decode(DB::table('settings')->where('key','finance_settings')->first()->json ?? '{}')
         ]);
     }
@@ -674,4 +675,5 @@ class AdminsDashboardController extends Controller
             'games' => $games
         ]);
     }
+   
 }

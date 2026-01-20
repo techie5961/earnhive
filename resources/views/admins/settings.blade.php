@@ -46,6 +46,54 @@
             <button class="post bg-secondary secondary-text"><span>Update Social Settings</span></button>
         </form>
 
+
+         {{-- UPGRADE SETTINGS --}}
+        <form action="{{ url('admins/post/upgrade/settings/process') }}" method="POST" onsubmit="PostRequest(event,this)" class="w-full p-10 g-10 column bg-white box-shadow br-10">
+            <div class="row g-5 c-bg-secondary align-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="CurrentColor" height="20" width="20"><path d="M208,28H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28Zm-4,24v92H179.31a19.86,19.86,0,0,0-14.14,5.86L147,168H109L90.83,149.86A19.86,19.86,0,0,0,76.69,144H52V52ZM52,204V168H75l18.14,18.14A19.86,19.86,0,0,0,107.31,192h41.38a19.86,19.86,0,0,0,14.14-5.86L181,168h23v36Zm35.51-87.51a12,12,0,0,1,0-17l32-32a12,12,0,0,1,17,0l32,32a12,12,0,0,1-17,17L140,105v35a12,12,0,0,1-24,0V105l-11.51,11.52A12,12,0,0,1,87.51,116.49Z"></path></svg>
+                 <span class="desc bold c-bg-secondary ws-nowrap">Upgrade Settings</span>
+                
+            </div>
+            <hr>
+            <input type="hidden" name="_token" value="{{ @csrf_token() }}" class="input">
+          
+            {{-- NEW INPUT --}}
+            <div class="column w-full g-5">
+             <label for="">Upgrade Cost (&#8358;)</label>
+            <div class="cont w-full h-50 br-5 border-1 border-color-silver bg-dim">
+                <input value="{{ $upgrade->cost ?? '' }}" type="number" placeholder="E.g 4000" name="cost"  class="inp required input h-full w-full no-border bg-transparent br-10">
+            </div>
+            </div>
+            
+
+            {{-- NEW INPUT --}}
+             <div class="column w-full g-5">
+                 <label for="">Account Number</label>
+            <div class="cont w-full h-50 br-5 border-1 border-color-silver bg-dim">
+                <input value="{{ $upgrade->account_number ?? '' }}" type="number" placeholder="E.g 3002529715" name="account_number"  class="inp required input h-full w-full no-border bg-transparent br-10">
+            </div>
+             </div>
+
+              {{-- NEW INPUT --}}
+             <div class="column w-full g-5">
+                 <label for="">Bank Name</label>
+            <div class="cont w-full h-50 br-5 border-1 border-color-silver bg-dim">
+                <input value="{{ $upgrade->bank_name ?? '' }}" type="text" placeholder="E.g First Bank" name="bank_name"  class="inp required input h-full w-full no-border bg-transparent br-10">
+            </div>
+             </div>
+
+                 {{-- NEW INPUT --}}
+             <div class="column w-full g-5">
+                 <label for="">Account Name</label>
+            <div class="cont w-full h-50 br-5 border-1 border-color-silver bg-dim">
+                <input value="{{ $upgrade->account_name ?? '' }}" type="text" placeholder="E.g {{ config('app.name') }}" name="account_name"  class="inp required input h-full w-full no-border bg-transparent br-10">
+            </div>
+             </div>
+           
+             {{-- SUBMIT BUTTON --}}
+            <button class="post bg-secondary secondary-text"><span>Update Upgrade Settings</span></button>
+        </form>
+
         {{-- GENERAL SETTINGS --}}
         <form action="{{ url('admins/post/general/settings/process') }}" method="POST" onsubmit="PostRequest(event,this)" class="w-full p-10 g-10 column bg-white box-shadow br-10">
             <div class="row g-5 align-center">
